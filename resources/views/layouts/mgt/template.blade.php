@@ -17,6 +17,9 @@
               content:"*";
               color:red;
             }
+            .panel-body .table-responsive {
+                width: 100%;
+            }
         </style>
     </head>
     <body>
@@ -33,8 +36,9 @@
                 <ul class="list-unstyled components">
                     <!-- <p>Dummy Heading</p> -->
                     <li>
-                        <a href="/mgt/team">Manage Team</a>
-                        <a href="/mgt/user">Manage User</a>
+                        <a href="/mgt/user">Employee</a>
+                        <a href="/mgt/team">Team</a>
+                        <a href="/mgt/team">Salary</a>
                         <a href="/mgt/revenue">Revenue</a>
                         <a href="/mgt/imposition-rate">Imposition Rate</a>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
