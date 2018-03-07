@@ -2,16 +2,16 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Revenue extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'users';
+    protected $table = 'revenues';
 
     /**
     * The database primary key value.
@@ -25,10 +25,8 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'team_id', 'type', 'shortname', 'bophan', 'mobile', 'department'];
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $fillable = ['team_id', 'amount', 'monthYear'];
+
     public function team()
     {
         return $this->belongsTo('App\Team');

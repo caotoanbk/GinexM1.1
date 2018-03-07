@@ -5,11 +5,10 @@ namespace App\Http\Controllers\Mgt;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Team;
 use App\User;
 use Illuminate\Http\Request;
 
-class TeamController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,16 +18,24 @@ class TeamController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->get('search');
-        $perPage = 25;
+        $perPage = 10;
 
         if (!empty($keyword)) {
-            $team = Team::where('name', 'LIKE', "%$keyword%")
+            $user = User::where('name', 'LIKE', "%$keyword%")
+                ->orWhere('email', 'LIKE', "%$keyword%")
+                ->orWhere('password', 'LIKE', "%$keyword%")
+                ->orWhere('team_id', 'LIKE', "%$keyword%")
+                ->orWhere('type', 'LIKE', "%$keyword%")
+                ->orWhere('shortname', 'LIKE', "%$keyword%")
+                ->orWhere('bophan', 'LIKE', "%$keyword%")
+                ->orWhere('mobile', 'LIKE', "%$keyword%")
+                ->orWhere('department', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
         } else {
-            $team = Team::paginate($perPage);
+            $user = User::paginate($perPage);
         }
 
-        return view('mgt.team.index', compact('team'));
+        return view('mgt.user.index', compact('user'));
     }
 
     /**
@@ -38,8 +45,7 @@ class TeamController extends Controller
      */
     public function create()
     {
-        $members = User::get()->pluck('name', 'id');
-        return view('mgt.team.create', compact('members'));
+        return view('mgt.user.create');
     }
 
     /**
@@ -52,17 +58,11 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         
-        $requestData = $request->except('members');
-        $memberIds = $request->get('members');
-        $team = Team::create($requestData);
-        foreach ($memberIds as $mid)
-        {
-            $m = User::find($mid);
-            $m->team()->associate($team);
-            $m->save();
-        }
+        $requestData = $request->all();
+        
+        User::create($requestData);
 
-        return redirect('mgt/team')->with('flash_message', 'Team added!');
+        return redirect('mgt/user')->with('flash_message', 'User added!');
     }
 
     /**
@@ -74,9 +74,9 @@ class TeamController extends Controller
      */
     public function show($id)
     {
-        $team = Team::findOrFail($id);
+        $user = User::findOrFail($id);
 
-        return view('mgt.team.show', compact('team'));
+        return view('mgt.user.show', compact('user'));
     }
 
     /**
@@ -88,10 +88,9 @@ class TeamController extends Controller
      */
     public function edit($id)
     {
-        $team = Team::findOrFail($id);
-        $members = User::get()->pluck('name', 'id');
+        $user = User::findOrFail($id);
 
-        return view('mgt.team.edit', compact('team', 'members'));
+        return view('mgt.user.edit', compact('user'));
     }
 
     /**
@@ -105,24 +104,12 @@ class TeamController extends Controller
     public function update(Request $request, $id)
     {
         
-        $requestData = $request->except('members');
-        $memberIds = $request->get('members');
+        $requestData = $request->all();
         
-        $team = Team::findOrFail($id);
-        $team->update($requestData);
-        foreach ($team->users()->get() as $user) {
-            $user->team()->dissociate();
-            $user->save();
-        } 
-                
-        if($memberIds){
-            foreach ($memberIds as $mid) {
-            $m = User::find($mid);
-            $m->team()->associate($team);
-            $m->save();
-        }
-        }
-        return redirect('mgt/team')->with('flash_message', 'Team updated!');
+        $user = User::findOrFail($id);
+        $user->update($requestData);
+
+        return redirect('mgt/user')->with('flash_message', 'User updated!');
     }
 
     /**
@@ -134,8 +121,8 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
-        Team::destroy($id);
+        User::destroy($id);
 
-        return redirect('mgt/team')->with('flash_message', 'Team deleted!');
+        return redirect('mgt/user')->with('flash_message', 'User deleted!');
     }
 }

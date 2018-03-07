@@ -23,3 +23,8 @@ Route::auth();
 Route::get('/home', 'HomeController@index');
 
 Route::resource('mgt/team', 'Mgt\\TeamController');
+Route::resource('mgt/user', 'Mgt\\UserController');
+Route::get('mgt/imposition-rate', function() {
+	return view('mgt.imposition-rate.index');
+});
+Route::resource('mgt/revenue', 'Mgt\\RevenueController');

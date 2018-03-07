@@ -12,6 +12,12 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <!-- Our Custom CSS -->
         <link rel="stylesheet" href="/css/style.css">
+        <style>
+            .form-group.required .control-label:after {
+              content:"*";
+              color:red;
+            }
+        </style>
     </head>
     <body>
 
@@ -26,16 +32,11 @@
 
                 <ul class="list-unstyled components">
                     <!-- <p>Dummy Heading</p> -->
-                    <li class="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="#">Home 1</a></li>
-                            <li><a href="#">Home 2</a></li>
-                            <li><a href="#">Home 3</a></li>
-                        </ul>
-                    </li>
                     <li>
                         <a href="/mgt/team">Manage Team</a>
+                        <a href="/mgt/user">Manage User</a>
+                        <a href="/mgt/revenue">Revenue</a>
+                        <a href="/mgt/imposition-rate">Imposition Rate</a>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
                             <li><a href="#">Page 1</a></li>
@@ -59,7 +60,7 @@
 
             <!-- Page Content Holder -->
             <div id="content">
-
+                {{--
                 <nav class="navbar navbar-default">
                     <div class="container-fluid">
 
@@ -79,7 +80,7 @@
                             </ul>
                         </div>
                     </div>
-                </nav>
+                </nav> --}}
 
                  @yield('content')
             </div>
