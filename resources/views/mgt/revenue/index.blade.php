@@ -11,6 +11,7 @@
                         </a>
 
                         {!! Form::open(['method' => 'GET', 'url' => '/mgt/revenue', 'class' => 'navbar-form my-2 my-lg-0 navbar-right', 'role' => 'search'])  !!}
+                        {{--
                         <select name="month" id="month" class="form-control" value="{{ request('month') }}">
                             <option value="">Choose month</option>
                             <option value="2018-01">01/2018</option>
@@ -26,6 +27,7 @@
                             <option value="2018-11">11/2018</option>
                             <option value="2018-12">12/2018</option>
                         </select>
+                        --}}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
                             <span class="input-group-btn">

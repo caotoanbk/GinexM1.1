@@ -3,7 +3,7 @@
 @section('content')
             <div>
                 <div class="panel panel-default">
-                    <div class="panel-heading">User {{ $user->id }}</div>
+                    <div class="panel-heading">User {{ $user->name }}</div>
                     <div class="panel-body">
 
                         <a href="{{ url('/mgt/user') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
@@ -26,9 +26,6 @@
                         <div class="table-responsive">
                             <table class="table table-borderless">
                                 <tbody>
-                                    <tr>
-                                        <th>ID</th><td>{{ $user->id }}</td>
-                                    </tr>
                                     <tr><th> Name </th><td> {{ $user->name }} </td></tr><tr><th> Email </th><td> {{ $user->email }} </td></tr><tr><th> Department </th><td> {{ $user->deparment }} </td></tr>
                                     <tr><th> Team </th><td> {{ count($user->team()->pluck('name'))>0?'hello':'' }} </td></tr>
                                 </tbody>

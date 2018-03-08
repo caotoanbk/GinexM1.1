@@ -38,8 +38,8 @@
                     <li>
                         <a href="/mgt/user">Employee</a>
                         <a href="/mgt/team">Team</a>
-                        <a href="/mgt/team">Salary</a>
                         <a href="/mgt/revenue">Revenue</a>
+                        <a href="/mgt/salary">Salary</a>
                         <a href="/mgt/imposition-rate">Imposition Rate</a>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
@@ -89,7 +89,7 @@
                  @yield('content')
             </div>
         </div>
-
+        
 
 
 
@@ -106,5 +106,6 @@
                  });
              });
          </script>
+         @yield('javascript')
     </body>
 </html>

@@ -34,5 +34,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\Team');
     }
 
+    public function salaries()
+    {
+        return $this->hasMany('App\Salary');
+    }
+
     
 }

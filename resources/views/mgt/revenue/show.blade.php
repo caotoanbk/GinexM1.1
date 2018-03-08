@@ -26,10 +26,7 @@
                         <div class="table-responsive">
                             <table class="table table-borderless">
                                 <tbody>
-                                    <tr>
-                                        <th>ID</th><td>{{ $revenue->id }}</td>
-                                    </tr>
-                                    <tr><th> Team Id </th><td> {{ $revenue->team()->first()->name }} </td></tr><tr><th> Amount </th><td> {{ number_format($revenue->amount, 0, ',', '.') }} </td></tr><tr><th> Month </th><td> {{ $revenue->monthYear }} </td></tr>
+                                    <tr><th> Team</th><td> {{ $revenue->team()->first()->name }} </td></tr><tr><th> Amount </th><td> {{ number_format($revenue->amount, 0, ',', '.') }} </td></tr><tr><th> Month </th><td> {{ $revenue->monthYear }} </td></tr>
                                 </tbody>
                             </table>
                         </div>

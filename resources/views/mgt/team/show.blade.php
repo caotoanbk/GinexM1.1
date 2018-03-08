@@ -4,7 +4,7 @@
 
             <div>
                 <div class="panel panel-default">
-                    <div class="panel-heading">Team {{ $team->id }}</div>
+                    <div class="panel-heading">Team {{ $team->name }}</div>
                     <div class="panel-body">
 
                         <a href="{{ url('/mgt/team') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
@@ -27,9 +27,6 @@
                         <div class="table-responsive">
                             <table class="table table-borderless">
                                 <tbody>
-                                    <tr>
-                                        <th>ID</th><td>{{ $team->id }}</td>
-                                    </tr>
                                     <tr><th> Name </th><td> {{ $team->name }} </td></tr>
                                     <tr><th> Memebers </th><td> {{ $team->users->pluck('name') }} </td></tr>
                                 </tbody>

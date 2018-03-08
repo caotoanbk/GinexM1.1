@@ -5,18 +5,13 @@ namespace App\Http\Controllers\Mgt;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Revenue;
-use App\Team;
+use App\Salary;
+use App\User;
 use Illuminate\Http\Request;
 
-class RevenueController extends Controller
+class SalaryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    private   $monthYear = [
+        private   $monthYear = [
             '2018-01' => '01/2018',
             '2018-02' => '02/2018',
             '2018-03' => '03/2018',
@@ -31,24 +26,27 @@ class RevenueController extends Controller
             '2018-11' => '11/2018',
             '2018-12' => '12/2018',
         ];
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index(Request $request)
     {
         $keyword = $request->get('search');
-        // $month = $request->get('month');
-        $perPage = 10;
+        $perPage = 15;
 
         if (!empty($keyword)) {
-            $revenue = Revenue::where('team_id', 'LIKE', "%$keyword%")
-                ->orWhere('amount', 'LIKE', "%$keyword%")
+            $salary = Salary::where('user_id', 'LIKE', "%$keyword%")
+                ->orWhere('ammount', 'LIKE', "%$keyword%")
                 ->orWhere('monthYear', 'LIKE', "%$keyword%")
-                ->orderBy('monthYear', 'desc')
+                ->orderBy('monthYear', 'DESC')
                 ->paginate($perPage);
         } else {
-            $revenue = Revenue::orderBy('monthYear', 'desc')
-                            ->paginate($perPage);
+            $salary = Salary::orderBy('monthYear', 'DESC')->paginate($perPage);
         }
+        return view('mgt.salary.index', compact('salary'));
 
-        return view('mgt.revenue.index', compact('revenue'));
     }
 
     /**
@@ -58,9 +56,9 @@ class RevenueController extends Controller
      */
     public function create()
     {
-        $teams = Team::get()->pluck('name', 'id');
         $monthYear = $this->monthYear;
-        return view('mgt.revenue.create', compact('teams', 'monthYear'));
+        // $users = User::get()->pluck('name', 'id');
+        return view('mgt.salary.create', compact('monthYear'));
     }
 
     /**
@@ -75,9 +73,22 @@ class RevenueController extends Controller
         
         $requestData = $request->all();
         
-        Revenue::create($requestData);
+        Salary::create($requestData);
 
-        return redirect('mgt/revenue')->with('flash_message', 'Revenue added!');
+        return redirect('mgt/salary')->with('flash_message', 'Salary added!');
+    }
+    public function storeSalaries(Request $request)
+    {
+        $userIds = User::get()->pluck('id');
+        foreach ($userIds as $userId) {
+            if(Salary::where('user_id', $userId)
+                ->where('monthYear', $request->get('monthYear'))
+                ->get()
+                ->toArray())
+                return redirect('mgt/salary')->with('flash_message', 'Salary On this month already exist!');
+            Salary::create(['user_id' => $userId, 'monthYear' => $request->get('monthYear'), 'amount' => 0]);
+        }
+        return redirect('mgt/salary')->with('flash_message', 'Salary Table created!');
     }
 
     /**
@@ -89,9 +100,9 @@ class RevenueController extends Controller
      */
     public function show($id)
     {
-        $revenue = Revenue::findOrFail($id);
+        $salary = Salary::findOrFail($id);
 
-        return view('mgt.revenue.show', compact('revenue'));
+        return view('mgt.salary.show', compact('salary'));
     }
 
     /**
@@ -103,11 +114,9 @@ class RevenueController extends Controller
      */
     public function edit($id)
     {
-        $revenue = Revenue::findOrFail($id);
-        $teams = Team::get()->pluck('name', 'id');
-        $monthYear = $this->monthYear;
+        $salary = Salary::findOrFail($id);
 
-        return view('mgt.revenue.edit', compact('revenue', 'teams', 'monthYear'));
+        return view('mgt.salary.edit', compact('salary'));
     }
 
     /**
@@ -123,10 +132,10 @@ class RevenueController extends Controller
         
         $requestData = $request->all();
         
-        $revenue = Revenue::findOrFail($id);
-        $revenue->update($requestData);
+        $salary = Salary::findOrFail($id);
+        $salary->update($requestData);
 
-        return redirect('mgt/revenue')->with('flash_message', 'Revenue updated!');
+        return redirect('mgt/salary')->with('flash_message', 'Salary updated!');
     }
 
     /**
@@ -138,8 +147,8 @@ class RevenueController extends Controller
      */
     public function destroy($id)
     {
-        Revenue::destroy($id);
+        Salary::destroy($id);
 
-        return redirect('mgt/revenue')->with('flash_message', 'Revenue deleted!');
+        return redirect('mgt/salary')->with('flash_message', 'Salary deleted!');
     }
 }
