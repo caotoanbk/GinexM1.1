@@ -25,7 +25,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'team_id', 'type', 'shortname', 'bophan', 'mobile', 'department'];
+    protected $fillable = ['name', 'email', 'password', 'team_id', 'type', 'shortname', 'bophan', 'mobile', 'department', 'active'];
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -37,6 +37,25 @@ class User extends Authenticatable
     public function salaries()
     {
         return $this->hasMany('App\Salary');
+    }
+
+    public function getBphanAttribute()
+    {
+        if($this->type == 1) 
+            return 'QLKD & Acc.';
+        if($this->type == 2) 
+            return 'Điều hành';
+        if($this->type == 4) 
+            return 'Hunter';
+        if($this->type == 5) 
+            return 'Sales & Marketing';
+        if($this->type == 6) 
+            return 'Nấu ăn';
+        if($this->type == 7) 
+            return 'IT';
+        if($this->type == 8) 
+            return 'CTV';
+        return '';
     }
 
     

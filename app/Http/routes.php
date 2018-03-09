@@ -28,3 +28,4 @@ Route::get('mgt/imposition-rate', 'Mgt\\ImpositionRateController@index');
 Route::resource('mgt/revenue', 'Mgt\\RevenueController');
 Route::resource('mgt/salary', 'Mgt\\SalaryController');
 Route::post('mgt/salary-table', 'Mgt\\SalaryController@storeSalaries');
+Route::get('users/update-active', 'Mgt\\UserController@updateActive');

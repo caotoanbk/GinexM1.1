@@ -77,62 +77,76 @@
 			<td><strong>Nhóm</strong></td>
 			<td><strong>Doanh thu</strong></td>
 			<td><strong>TL phân bổ</strong></td>
-			<td>105,000,000</td>
-			<td>6,000,000</td>
-			<td>5,500,000</td>
-			<td>11,000,000</td>
-			<td>6,500,000</td>
-			<td>5,000,000</td>
+			<td>{{ number_format($utility->calculateSalaryDepart($monthValue, 4),
+			0, ',', '.') }}</td>
+			<td>{{ number_format($utility->calculateSalaryDepart($monthValue, 2),
+			0, ',', '.') }}</td>
+			<td>{{ number_format($utility->calculateSalaryDepart($monthValue, 5),
+			0, ',', '.') }}</td>
+			<td>{{ number_format($utility->calculateSalaryDepart($monthValue, 1),
+			0, ',', '.') }}</td>
+			<td>{{ number_format($utility->calculateSalaryDepart($monthValue, 7),
+			0, ',', '.') }}</td>
+			<td>{{ number_format($utility->calculateSalaryDepart($monthValue, 6),
+			0, ',', '.') }}</td>
 			<td></td>
 			<td></td>
-			<td>13</td>
-			<td>1</td>
-			<td>2</td>
-			<td>2</td>
-			<td>1</td>
-			<td>1</td>
+			<td>{{ $utility->countType(4) }}</td>
+			<td>{{ $utility->countType(2) }}</td>
+			<td>{{ $utility->countType(5) }}</td>
+			<td>{{ $utility->countType(1) }}</td>
+			<td>{{ $utility->countType(7) }}</td>
+			<td>{{ $utility->countType(6) }}</td>
 			<td></td>
 		</tr>
+
 		@foreach ($teams as $team)
 		<tr>
 			<td>{{ $team->name }}</td>
-			<td>doanh thu</td>
-			<td>TL phân bổ</td>
-			<td>105,000,000</td>
-			<td>6,000,000</td>
-			<td>5,500,000</td>
-			<td>11,000,000</td>
-			<td>6,500,000</td>
-			<td>5,000,000</td>
+			<td>{{ number_format($team->revenues()->where('monthYear', $monthValue)->first()->amount,
+			0, ',', '.') }}</td>
+			<td>@if($tongdoanhthu > 0) {{ number_format($team->revenues()->where('monthYear', $monthValue)->first()->amount / $tongdoanhthu, 2, ',', '.') }} @else 0 @endif</td>
+			<td>@if($tongdoanhthu > 0) {{ number_format($team->revenues()->where('monthYear', $monthValue)->first()->amount / $tongdoanhthu * $utility->calculateSalaryDepart($monthValue, 4), 0, ',', '.') }} @else 0 @endif</td>
+			<td>@if($tongdoanhthu > 0) {{ number_format($team->revenues()->where('monthYear', $monthValue)->first()->amount / $tongdoanhthu * $utility->calculateSalaryDepart($monthValue, 2), 0, ',', '.') }} @else 0 @endif</td>
+			<td>@if($tongdoanhthu > 0) {{ number_format($team->revenues()->where('monthYear', $monthValue)->first()->amount / $tongdoanhthu * $utility->calculateSalaryDepart($monthValue, 5), 0, ',', '.') }} @else 0 @endif</td>
+			<td>@if($tongdoanhthu > 0) {{ number_format($team->revenues()->where('monthYear', $monthValue)->first()->amount / $tongdoanhthu * $utility->calculateSalaryDepart($monthValue, 1), 0, ',', '.') }} @else 0 @endif</td>
+			<td>@if($tongdoanhthu > 0) {{ number_format($team->revenues()->where('monthYear', $monthValue)->first()->amount / $tongdoanhthu * $utility->calculateSalaryDepart($monthValue, 7), 0, ',', '.') }} @else 0 @endif</td>
+			<td>@if($tongdoanhthu > 0) {{ number_format($team->revenues()->where('monthYear', $monthValue)->first()->amount / $tongdoanhthu * $utility->calculateSalaryDepart($monthValue, 6), 0, ',', '.') }} @else 0 @endif</td>
 			<td></td>
 			<td></td>
-			<td>13</td>
-			<td>1</td>
-			<td>2</td>
-			<td>2</td>
-			<td>1</td>
-			<td>1</td>
+			<td>{{ count($team->users()->where('active', true)->get()->toArray())}}</td>
+			<td>@if($tongdoanhthu > 0) {{ number_format($team->revenues()->where('monthYear', $monthValue)->first()->amount / $tongdoanhthu * $utility->countType(2), 2, ',', '.') }} @else 0 @endif</td>
+			<td>@if($tongdoanhthu > 0) {{ number_format($team->revenues()->where('monthYear', $monthValue)->first()->amount / $tongdoanhthu * $utility->countType(5), 2, ',', '.') }} @else 0 @endif</td>
+			<td>@if($tongdoanhthu > 0) {{ number_format($team->revenues()->where('monthYear', $monthValue)->first()->amount / $tongdoanhthu * $utility->countType(1), 2, ',', '.') }} @else 0 @endif</td>
+			<td>@if($tongdoanhthu > 0) {{ number_format($team->revenues()->where('monthYear', $monthValue)->first()->amount / $tongdoanhthu * $utility->countType(7), 2, ',', '.') }} @else 0 @endif</td>
+			<td>@if($tongdoanhthu > 0) {{ number_format($team->revenues()->where('monthYear', $monthValue)->first()->amount / $tongdoanhthu * $utility->countType(6), 2, ',', '.') }} @else 0 @endif</td>
 			<td></td>
 		</tr>
 		@endforeach
 		<tr>
 			<td><strong>Tổng</strong></td>
-			<td>doanh thu</td>
-			<td>TL phân bổ</td>
-			<td>105,000,000</td>
-			<td>6,000,000</td>
-			<td>5,500,000</td>
-			<td>11,000,000</td>
-			<td>6,500,000</td>
-			<td>5,000,000</td>
+			<td>{{ number_format($tongdoanhthu, 0, ',', '.') }}</td>
+			<td>@if($tongdoanhthu > 0) 1 @else 0 @endif</td>
+			<td>{{ number_format($utility->calculateSalaryDepart($monthValue, 4),
+			0, ',', '.') }}</td>
+			<td>{{ number_format($utility->calculateSalaryDepart($monthValue, 2),
+			0, ',', '.') }}</td>
+			<td>{{ number_format($utility->calculateSalaryDepart($monthValue, 5),
+			0, ',', '.') }}</td>
+			<td>{{ number_format($utility->calculateSalaryDepart($monthValue, 1),
+			0, ',', '.') }}</td>
+			<td>{{ number_format($utility->calculateSalaryDepart($monthValue, 7),
+			0, ',', '.') }}</td>
+			<td>{{ number_format($utility->calculateSalaryDepart($monthValue, 6),
+			0, ',', '.') }}</td>
 			<td></td>
 			<td></td>
-			<td>13</td>
-			<td>1</td>
-			<td>2</td>
-			<td>2</td>
-			<td>1</td>
-			<td>1</td>
+			<td>{{ $utility->countType(4) }}</td>
+			<td>{{ $utility->countType(2) }}</td>
+			<td>{{ $utility->countType(5) }}</td>
+			<td>{{ $utility->countType(1) }}</td>
+			<td>{{ $utility->countType(7) }}</td>
+			<td>{{ $utility->countType(6) }}</td>
 			<td></td>
 		</tr>
 	</tbody>

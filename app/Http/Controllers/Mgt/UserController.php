@@ -125,4 +125,11 @@ class UserController extends Controller
 
         return redirect('mgt/user')->with('flash_message', 'User deleted!');
     }
+    public function updateActive(Request $request)
+    {
+        $user = User::findOrFail($request->get('user_id'));
+        $user->active = !$user->active;
+        $user->save();
+        return;
+    }
 }

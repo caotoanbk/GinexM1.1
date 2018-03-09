@@ -16,7 +16,7 @@ class CreateRevenuesTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->integer('team_id')->nullable();
-            $table->integer('amount')->nullable();
+            $table->integer('amount')->default(0);
             $table->string('monthYear')->nullable();
             });
     }

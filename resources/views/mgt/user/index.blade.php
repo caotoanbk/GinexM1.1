@@ -26,14 +26,14 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Name</th><th>Email</th><th>Department</th><th>Actions</th>
+                                        <th>#</th><th>Name</th><th>Email</th><th>Job</th><th>Active</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($user as $item)
                                     <tr>
                                         <td>{{ $loop->iteration or $item->id }}</td>
-                                        <td>{{ $item->name }}</td><td>{{ $item->email }}</td><td>{{ $item->bophan }}</td>
+                                        <td>{{ $item->name }}</td><td>{{ $item->email }}</td><td>{{ $item->bphan }}</td><td class="text-center"><input id="{{$item->id}}" class="chk_active" data-id={{ $item->id }} type="checkbox" @if($item->active) checked="checked" @endif></td>
                                         <td>
                                             <a href="{{ url('/mgt/user/' . $item->id) }}" title="View User"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/mgt/user/' . $item->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
@@ -62,4 +62,16 @@
             </div>
         </div>
     </div>
+@endsection
+@section('javascript')
+<script>
+    $(".chk_active").on("change", function() {
+        $.get(
+                "/users/update-active",
+                {user_id: $(this).attr("id")},
+                function(data) {
+                }
+         );
+    });
+</script>
 @endsection

@@ -24,7 +24,12 @@
     </head>
     <body>
 
-
+            @if (Session::has('flash_message'))
+                <div class="alert alert-info alert-block" style="position: fixed; top: 0px; width: 20%; right: 0px;">
+                    <button type="button" class="close" data-dismiss="alert">×</button> 
+                        <strong>{{ Session::get('flash_message') }}</strong>
+                </div>
+            @endif
 
         <div class="wrapper">
             <!-- Sidebar Holder -->
@@ -36,11 +41,12 @@
                 <ul class="list-unstyled components">
                     <!-- <p>Dummy Heading</p> -->
                     <li>
-                        <a href="/mgt/user">Employee</a>
+                        <a href="/mgt/user">User</a>
                         <a href="/mgt/team">Team</a>
                         <a href="/mgt/revenue">Revenue</a>
                         <a href="/mgt/salary">Salary</a>
                         <a href="/mgt/imposition-rate">Imposition Rate</a>
+                        <a href="/mgt/fundermantal-index">Fundermantal Index</a>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
                             <li><a href="#">Page 1</a></li>
@@ -104,6 +110,11 @@
                  $('#sidebarCollapse').on('click', function () {
                      $('#sidebar').toggleClass('active');
                  });
+                $('div.alert').delay(3000).slideUp(300);
+                var loc = window.location.pathname;
+               $('nav#sidebar').find('a').each(function() {
+                 $(this).toggleClass('active', loc.indexOf($(this).attr('href')) != -1);
+              });
              });
          </script>
          @yield('javascript')

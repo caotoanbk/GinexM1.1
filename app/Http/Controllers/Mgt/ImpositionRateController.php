@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Mgt;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Team;
+use App\Revenue;
+use App\Utility;
 use App\Http\Controllers\Controller;
 
 class ImpositionRateController extends Controller
@@ -28,11 +31,36 @@ class ImpositionRateController extends Controller
     {
     	$monthYear = $this->monthYear;
     	$isRequest = $request->get('monthYear')?true:false;
+        $monthValue = $request->get('monthYear');
+        $tongdoanhthu = 0;
+        if($monthValue)
+            $tongdoanhthu = $this->calculateRevenue($monthValue);
     	/*$revenues = null;
     	if($request->get('monthYear')){
     		$revenues = \App\Revenue::where('monthYear', $request->get('monthYear'))->get()->toArray();
     	}*/
     	$teams = \App\Team::all();
-    	return view('mgt.imposition-rate.index', compact('monthYear', 'teams', 'isRequest'));
+        $utility = new Utility();
+    	return view('mgt.imposition-rate.index', compact('monthYear', 'teams', 'isRequest', 'monthValue', 'tongdoanhthu', 'utility'));
+    }
+
+    public function calculateRevenue($month)
+    {
+        $teamIds = Team::get()->pluck('id');
+        foreach ($teamIds as $teamId) {
+            if(count(Revenue::where('monthYear', $month)
+                        ->where('team_id', $teamId)
+                        ->get()
+                        ->toArray()) == 0)
+                Revenue::create(['team_id' => $teamId, 'monthYear' => $month, 'amount' => 0]);
+        }
+        if(!$month)
+            return 0;
+        $revenues = Revenue::where('monthYear', $month)->get();
+        $tong = 0;
+        foreach ($revenues as $revenue) {
+            $tong += $revenue->amount;
+        }
+        return $tong;
     }
 }

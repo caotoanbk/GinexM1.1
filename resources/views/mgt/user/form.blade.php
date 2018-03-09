@@ -19,7 +19,7 @@
 </div><div class="form-group {{ $errors->has('type') ? 'has-error' : ''}}">
     {!! Form::label('type', 'Type', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::select('type',['0' => 'Logistics', '2' => 'Quản lý', '1' => 'Kế Toán', '3' => 'Phụ trách BP', '6' => 'Thủ Quỹ', '4' => 'Tuyển Dụng' ,'5' => 'Marketing'], null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+        {!! Form::select('type',['0' => 'Logistics', '2' => 'Điều hành', '1' => 'QLKD & Acc.', '3' => 'Phụ trách BP', '6' => 'Thủ Quỹ', '4' => 'Hunter' ,'5' => 'Sales & Marketing', '6' => 'Nấu ăn', '7' => 'IT', '8' => 'CTV'], null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
         {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('shortname') ? 'has-error' : ''}}">

@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->integer('team_id')->nullable();
             $table->integer('type')->nullable();
+            $table->boolean('active')->default(true);
             $table->string('shortname')->nullable();
             $table->string('bophan')->nullable();
             $table->string('mobile')->nullable();

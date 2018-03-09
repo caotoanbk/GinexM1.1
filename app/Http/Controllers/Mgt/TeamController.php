@@ -134,6 +134,10 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
+        $revenues = Team::find($id)->revenues()->get();
+        foreach ($revenues as $revenue) {
+            $revenue->delete();
+        }
         Team::destroy($id);
 
         return redirect('mgt/team')->with('flash_message', 'Team deleted!');
