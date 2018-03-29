@@ -24,12 +24,14 @@ class Utility
     
     public function calculateChiphilaodong($team_id, $month)
     {
-        $salaries = Salary::where('monthYear', $month)->where('team_id', $team_id)->get();
-        $sum = 0;
-        foreach ($salaries as $s) {
-            $sum += $s->amount;
-        }
-        return $sum;
+        return $this->calculatePositionRateTeam($team_id, $month)*$this->calculateSalaryDepart($month, 2) +
+        $this->calculateSalariesOfHunterInTeam($team_id, $month) +
+        $this->calculatePositionRateTeam($team_id, $month)*$this->calculateSalaryDepart($month, 5) +
+        $this->calculatePositionRateTeam($team_id, $month)*$this->calculateSalaryDepart($month, 1)+
+        $this->calculatePositionRateTeam($team_id, $month)*$this->calculateSalaryDepart($month, 7)+
+        $this->calculatePositionRateTeam($team_id, $month)*$this->calculateSalaryDepart($month, 6)+
+        $this->calculateSalariesOfCTVInTeam($team_id, $month);
+
     }
     public function calculateTongLDKhongbaogomCTV($team_id, $month)
     {
@@ -42,7 +44,9 @@ class Utility
                ) + $this->calculateNumberOfHunterInTeam($team_id, $month);
     }
     public function calculateTongLDBaogomCTV($team_id, $month)
-    {}
+    {
+        return $this->calculateTongLDKhongbaogomCTV($team_id, $month) + $this->calculateNumberOfCTVInTeam($team_id, $month);
+    }
     public function calculateTeamRatioDepartment($type, $team_id, $month)
     {}
     public function calculateNumberOfHunterInTeam($team_id, $month)
@@ -52,9 +56,27 @@ class Utility
             return $revenue->number_of_member;
         return;
     }
+    public function calculateNumberOfCTVInTeam($team_id, $month)
+    {
+        $revenue = \App\Revenue::where('team_id', $team_id)->where('monthYear', $month)->first();
+        if($revenue)
+            return $revenue->number_of_ctv;
+        return;
+    }
     public function calculateSalariesOfHunterInTeam($team_id, $month)
     {
-        $salaries = \App\Salary::where('monthYear', $month)->where('team_id', $team_id)->get();
+        $salaries = \App\Salary::where('monthYear', $month)->where('team_id', $team_id)->where('user_type', 4)->get();
+        if(!$salaries)
+            return;
+        $sum = 0;
+        foreach ($salaries as $s) {
+            $sum += $s->amount;
+        }
+        return $sum;
+    }
+    public function calculateSalariesOfCTVInTeam($team_id, $month)
+    {
+        $salaries = \App\Salary::where('monthYear', $month)->where('team_id', $team_id)->where('user_type', 8)->get();
         if(!$salaries)
             return;
         $sum = 0;

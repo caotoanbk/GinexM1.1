@@ -77,11 +77,13 @@ class RevenueController extends Controller
         $team_id = $request->get('team_id');
         $requestData['team_name']= Team::findOrFail($team_id)->name;
         $requestData['number_of_member'] = count(Team::where('id', $team_id)
+            ->first()
             ->users()
             ->where('type', '<>', 8)
             ->get()
             ->toArray());
         $requestData['number_of_ctv'] = count(Team::where('id', $team_id)
+            ->first()
             ->users()
             ->where('type', 8)
             ->get()

@@ -41,7 +41,7 @@ class TeamController extends Controller
     }
     public function create()
     {
-        $members = User::get()->pluck('ten_va_bophan', 'id')->toArray();
+        $members = User::whereIn('type', [4, 8])->orderBy('type', 'asc')->get()->pluck('ten_va_bophan', 'id')->toArray();
         return view('mgt.team.create', compact('members'));
     }
 

@@ -159,35 +159,35 @@
                 <td>Doanh Thu (VND)</td>
                 <td></td>
                 @foreach($months as $m)
-                <td>{{$utility->calculateDoanhthu($t->id, $m)}}</td>
+                <td>{{number_format($utility->calculateDoanhthu($t->id, $m), 0, '.', ',')}}</td>
                 @endforeach
             </tr>
             <tr>
                 <td>Doanh Thu/chi phí lao động</td>
                 <td></td>
                 @foreach($months as $m)
-                <td>{{$utility->calculateDoanhthu($t->id, $m)}}</td>
+                <td>@if($utility->calculateChiphilaodong($t->id, $m) > 0) {{number_format($utility->calculateDoanhthu($t->id, $m)/$utility->calculateChiphilaodong($t->id, $m), 2, '.', ',')}} @endif</td>
                 @endforeach
             </tr>
             <tr>
                 <td>Tổng LĐ_Kg bao gồm CTV</td>
                 <td></td>
                 @foreach($months as $m)
-                 <td>{{$utility->calculateTongLDKhongbaogomCTV($t->id, $m) }}</td>
+                 <td>{{number_format($utility->calculateTongLDKhongbaogomCTV($t->id, $m), 2, '.', ',') }}</td>
                 @endforeach
             </tr>
             <tr>
                 <td>Tổng LĐ_Bao gồm CTV</td>
                 <td></td>
                 @foreach($months as $m)
-                    <td>{{$utility->calculateTongLDBaogomCTV($t->id, $m) }}</td>
+                    <td>{{number_format($utility->calculateTongLDBaogomCTV($t->id, $m), 2, '.', ',') }}</td>
                 @endforeach
             </tr>
             <tr>
                 <td rowspan="7" style="vertical-align: middle;">Headcount</td>
                 <td>Cấp điều hành</td>
                 @foreach($months as $m)
-                 <td>{{$utility->calculatePositionRateTeam($t->id, $m)*$utility->countType(2, $m) }}</td>
+                 <td>{{number_format($utility->calculatePositionRateTeam($t->id, $m)*$utility->countType(2, $m), 2, '.', ',') }}</td>
                 @endforeach
             </tr>
             <tr>
@@ -199,80 +199,80 @@
             <tr>
                 <td>Sales & Marketing</td>
                 @foreach($months as $m)
-                    <td>{{$utility->calculatePositionRateTeam($t->id, $m)*$utility->countType(5, $m) }}</td>
+                    <td>{{number_format($utility->calculatePositionRateTeam($t->id, $m)*$utility->countType(5, $m), 2, '.', ',') }}</td>
                 @endforeach
             </tr>
             <tr>
                 <td>QLKD & Acc</td>
                 @foreach($months as $m)
-                <td>{{$utility->calculatePositionRateTeam($t->id, $m)*$utility->countType(1, $m) }}</td>
+                <td>{{number_format($utility->calculatePositionRateTeam($t->id, $m)*$utility->countType(1, $m), 2, '.', ',') }}</td>
                 @endforeach
             </tr>
             <tr>
                 <td>IT</td>
                 @foreach($months as $m)
-                <td>{{$utility->calculatePositionRateTeam($t->id, $m)*$utility->countType(7, $m) }}</td>
+                <td>{{number_format($utility->calculatePositionRateTeam($t->id, $m)*$utility->countType(7, $m), 2, '.', ',') }}</td>
                 @endforeach
             </tr>
             <tr>
                 <td>Nấu ăn</td>
                 @foreach($months as $m)
-                <td>{{$utility->calculatePositionRateTeam($t->id, $m)*$utility->countType(6, $m) }}</td>
+                <td>{{number_format($utility->calculatePositionRateTeam($t->id, $m)*$utility->countType(6, $m), 2, '.', ',') }}</td>
                 @endforeach
             </tr>
             <tr>
                 <td>CTV</td>
                 @foreach($months as $m)
-                <td></td>
+                <td>{{$utility->calculateNumberOfCTVInTeam($t->id, $m)}}</td>
                 @endforeach
             </tr>
             <tr>
                 <td colspan="2" style="vertical-align: middle; border-bottom: none;">Chi phí lao động (VND)</td>
                 @foreach($months as $m)
-                <td></td>
+                <td>{{number_format($utility->calculateChiphilaodong($t->id, $m), 2, '.', ',')}}</td>
                 @endforeach
             </tr>
             <tr>
                 <td rowspan="7" style="vertical-align: middle; border-top: none;"></td>
                 <td>Cấp điều hành</td>
                 @foreach($months as $m)
-                <td>{{$utility->calculatePositionRateTeam($t->id, $m)*$utility->calculateSalaryDepart($m, 2) }}</td>
+                <td>{{number_format($utility->calculatePositionRateTeam($t->id, $m)*$utility->calculateSalaryDepart($m, 2), 2, '.', ',') }}</td>
                 @endforeach
             </tr>
             <tr>
                 <td>Hunters</td>
                 @foreach($months as $m)
-                <td>{{$utility->calculateSalariesOfHunterInTeam($t->id, $m) }}</td>
+                <td>{{number_format($utility->calculateSalariesOfHunterInTeam($t->id, $m), 2, '.', ',') }}</td>
                 @endforeach
             </tr>
             <tr>
                 <td>Sales & Marketing</td>
                 @foreach($months as $m)
-                <td>{{$utility->calculatePositionRateTeam($t->id, $m)*$utility->calculateSalaryDepart($m, 5) }}</td>
+                <td>{{number_format($utility->calculatePositionRateTeam($t->id, $m)*$utility->calculateSalaryDepart($m, 5), 0, '.', ',') }}</td>
                 @endforeach
             </tr>
             <tr>
                 <td>QLKD & Acc</td>
                 @foreach($months as $m)
-                <td>{{$utility->calculatePositionRateTeam($t->id, $m)*$utility->calculateSalaryDepart($m, 1) }}</td>
+                <td>{{number_format($utility->calculatePositionRateTeam($t->id, $m)*$utility->calculateSalaryDepart($m, 1), 2, '.', ',') }}</td>
                 @endforeach
             </tr>
             <tr>
                 <td>IT</td>
                 @foreach($months as $m)
-                <td>{{$utility->calculatePositionRateTeam($t->id, $m)*$utility->calculateSalaryDepart($m, 7) }}</td>
+                <td>{{number_format($utility->calculatePositionRateTeam($t->id, $m)*$utility->calculateSalaryDepart($m, 7), 2, '.', ',') }}</td>
                 @endforeach
             </tr>
             <tr>
                 <td>Nấu ăn</td>
                 @foreach($months as $m)
-                <td>{{$utility->calculatePositionRateTeam($t->id, $m)*$utility->calculateSalaryDepart($m, 6) }}</td>
+                <td>{{number_format($utility->calculatePositionRateTeam($t->id, $m)*$utility->calculateSalaryDepart($m, 6), 2, '.', ',') }}</td>
                 @endforeach
             </tr>
             <tr>
                 <td>CTV</td>
                 @foreach($months as $m)
-                <td></td>
+                <td>{{number_format($utility->calculateSalariesOfCTVInTeam($t->id, $m), 0, '.', ',')}}</td>
                 @endforeach
                 </tr>
         @endforeach
