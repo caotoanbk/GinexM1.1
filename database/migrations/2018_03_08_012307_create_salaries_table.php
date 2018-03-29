@@ -16,9 +16,13 @@ class CreateSalariesTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->integer('user_id')->nullable();
+            $table->integer('team_id')->nullable();
+            $table->integer('user_type')->nullable();
+            $table->string('user_name')->nullable();
             $table->integer('amount')->nullable();
             $table->string('monthYear')->nullable();
-            });
+            $table->collation = 'utf8_unicode_ci';
+        });
     }
 
     /**

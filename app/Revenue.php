@@ -25,7 +25,7 @@ class Revenue extends Model
      *
      * @var array
      */
-    protected $fillable = ['team_id', 'amount', 'monthYear'];
+    protected $fillable = ['team_id', 'amount', 'monthYear', 'team_name', 'number_of_member', 'number_of_ctv'];
 
     public function team()
     {

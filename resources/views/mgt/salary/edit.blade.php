@@ -31,6 +31,27 @@
                         ]) !!}
 
                         {{--@include ('mgt.salary.form', ['submitButtonText' => 'Update'])--}}
+                        <div class="form-group {{ $errors->has('user_name') ? 'has-error' : ''}}">
+                            {!! Form::label('user_name', 'Username', ['class' => 'col-md-4 control-label']) !!}
+                            <div class="col-md-6">
+                                {!! Form::text('user_name', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+                                {!! $errors->first('user_name', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                        <div class="form-group {{ $errors->has('team_id') ? 'has-error' : ''}}">
+                            {!! Form::label('team_id', 'Team', ['class' => 'col-md-4 control-label']) !!}
+                            <div class="col-md-6">
+                                {!! Form::select('team_id', $teams, null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+                                {!! $errors->first('team_id', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                        <div class="form-group {{ $errors->has('user_type') ? 'has-error' : ''}}">
+                        {!! Form::label('user_type', 'Type', ['class' => 'col-md-4 control-label']) !!}
+                        <div class="col-md-6">
+                            {!! Form::select('user_type',['0' => 'Logistics', '2' => 'Điều hành', '1' => 'QLKD & Acc.', '3' => 'Phụ trách BP', '6' => 'Thủ Quỹ', '4' => 'Hunter' ,'5' => 'Sales & Marketing', '6' => 'Nấu ăn', '7' => 'IT', '8' => 'CTV'], null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+                            {!! $errors->first('user_type', '<p class="help-block">:message</p>') !!}
+                        </div>
+                    </div>
                         <div class="form-group {{ $errors->has('amount') ? 'has-error' : ''}}">
                             {!! Form::label('amount', 'Amount', ['class' => 'col-md-4 control-label']) !!}
                             <div class="col-md-6">

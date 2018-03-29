@@ -36,9 +36,12 @@ class TeamController extends Controller
      *
      * @return \Illuminate\View\View
      */
+    private function userWithType($value){
+        return 3;
+    }
     public function create()
     {
-        $members = User::get()->pluck('name', 'id');
+        $members = User::get()->pluck('ten_va_bophan', 'id')->toArray();
         return view('mgt.team.create', compact('members'));
     }
 
@@ -51,7 +54,6 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        
         $requestData = $request->except('members');
         $memberIds = $request->get('members');
         $team = Team::create($requestData);
@@ -61,7 +63,6 @@ class TeamController extends Controller
             $m->team()->associate($team);
             $m->save();
         }
-
         return redirect('mgt/team')->with('flash_message', 'Team added!');
     }
 
@@ -89,7 +90,7 @@ class TeamController extends Controller
     public function edit($id)
     {
         $team = Team::findOrFail($id);
-        $members = User::get()->pluck('name', 'id');
+        $members = User::get()->pluck('ten_va_bophan', 'id')->toArray();
 
         return view('mgt.team.edit', compact('team', 'members'));
     }
@@ -141,5 +142,11 @@ class TeamController extends Controller
         Team::destroy($id);
 
         return redirect('mgt/team')->with('flash_message', 'Team deleted!');
+    }
+    public function updateActive(Request $request){
+        $team = Team::findOrFail($request->get('team_id'));
+        $team->active = !$team->active;
+        $team->save();
+        return;
     }
 }

@@ -14,8 +14,10 @@ class CreateTeamsTable extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->increments('id');
+            $table->collation = 'utf8_unicode_ci';
             $table->timestamps();
             $table->string('name')->nullable();
+            $table->boolean('active')->default(true);
             });
     }
 

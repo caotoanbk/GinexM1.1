@@ -17,6 +17,10 @@ class CreateRevenuesTable extends Migration
             $table->timestamps();
             $table->integer('team_id')->nullable();
             $table->integer('amount')->default(0);
+            $table->collation = 'utf8_unicode_ci';
+            $table->integer('number_of_member')->default(0);
+            $table->integer('number_of_ctv')->default(0);
+            $table->string('team_name')->nullable();
             $table->string('monthYear')->nullable();
             });
     }

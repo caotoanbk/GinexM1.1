@@ -3,7 +3,7 @@
 @section('content')
             <div>
                 <div class="panel panel-default">
-                    <div class="panel-heading">Revenue {{ $revenue->id }}</div>
+                    <div class="panel-heading">Revenue of {{ $revenue->team_name }}</div>
                     <div class="panel-body">
 
                         <a href="{{ url('/mgt/revenue') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
@@ -26,7 +26,9 @@
                         <div class="table-responsive">
                             <table class="table table-borderless">
                                 <tbody>
-                                    <tr><th> Team</th><td> {{ $revenue->team()->first()->name }} </td></tr><tr><th> Amount </th><td> {{ number_format($revenue->amount, 0, ',', '.') }} </td></tr><tr><th> Month </th><td> {{ $revenue->monthYear }} </td></tr>
+                                    <tr><th> Team</th><td> {{ $revenue->team_name }} </td></tr>
+                                    <tr><th>Number of member</th><td> {{ $revenue->number_of_member }}</td></tr>
+                                    <tr><th> Amount </th><td> {{ number_format($revenue->amount, 0, ',', '.') }} </td></tr><tr><th> Month </th><td> {{ $revenue->monthYear }} </td></tr>
                                 </tbody>
                             </table>
                         </div>

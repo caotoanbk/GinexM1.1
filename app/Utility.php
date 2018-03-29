@@ -9,17 +9,84 @@ class Utility
 {
    public function calculateSalaryDepart($month, $type)
     {
-        $users = User::where('type', $type)->where('active', true)->get();
+        $users = Salary::where('user_type', $type)->where('monthYear', $month)->get();
         $sum = 0;
         foreach ($users as $user) {
-            $sum += $user->salaries()->where('monthYear', $month)->first()?$user->salaries()->where('monthYear', $month)->first()->amount: 0;
+            $sum += $user->amount;
         }
         return $sum;
 
     }
-    public function countType($type)
+    public function countType($type, $month)
     {
-        return count(User::where('type', $type)->where('active', true)->get()->toArray());
+        return count(Salary::where('user_type', $type)->where('monthYear', $month)->get()->toArray());
+    }
+    
+    public function calculateChiphilaodong($team_id, $month)
+    {
+        $salaries = Salary::where('monthYear', $month)->where('team_id', $team_id)->get();
+        $sum = 0;
+        foreach ($salaries as $s) {
+            $sum += $s->amount;
+        }
+        return $sum;
+    }
+    public function calculateTongLDKhongbaogomCTV($team_id, $month)
+    {
+       return $this->calculatePositionRateTeam($team_id, $month) * (
+                $this->countType(1, $month) +
+                $this->countType(2, $month) +
+                $this->countType(5, $month) +
+                $this->countType(6, $month) +
+                $this->countType(7, $month)
+               ) + $this->calculateNumberOfHunterInTeam($team_id, $month);
+    }
+    public function calculateTongLDBaogomCTV($team_id, $month)
+    {}
+    public function calculateTeamRatioDepartment($type, $team_id, $month)
+    {}
+    public function calculateNumberOfHunterInTeam($team_id, $month)
+    {
+        $revenue = \App\Revenue::where('team_id', $team_id)->where('monthYear', $month)->first();
+        if($revenue)
+            return $revenue->number_of_member;
+        return;
+    }
+    public function calculateSalariesOfHunterInTeam($team_id, $month)
+    {
+        $salaries = \App\Salary::where('monthYear', $month)->where('team_id', $team_id)->get();
+        if(!$salaries)
+            return;
+        $sum = 0;
+        foreach ($salaries as $s) {
+            $sum += $s->amount;
+        }
+        return $sum;
+    }
+    public function calculatePositionRateTeam($team_id, $month)
+    {
+        $tongdoanhthu = $this->calculateTongdoanhthu($month);
+        if($tongdoanhthu == 0)
+            return 0;
+        return $this->calculateDoanhthu($team_id, $month)/$tongdoanhthu;
+    }
+    public function calculateDoanhthu($team_id, $month)
+    {
+        $revenue = \App\Revenue::where('team_id', $team_id)->where('monthYear', $month)->first();
+        if($revenue)
+         return $revenue->amount;
+        return 0;
+    }
+    public function calculateTongdoanhthu($month)
+    {
+        if(!$month)
+            return 0;
+        $revenues = Revenue::where('monthYear', $month)->get();
+        $tong = 0;
+        foreach ($revenues as $revenue) {
+            $tong += $revenue->amount;
+        }
+        return $tong;
     }
     
 }

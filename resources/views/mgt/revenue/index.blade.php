@@ -4,7 +4,13 @@
 
             <div>
                 <div class="panel panel-default">
-                    <div class="panel-heading">Revenue</div>
+                    <div class="panel-heading">
+                        <button type="button" id="sidebarCollapse" class="btn btn-sm btn-info">
+                            <i class="glyphicon glyphicon-align-left"></i>
+                            <span>Toggle Sidebar</span>
+                        </button>
+                        <span style="margin-left: calc(50% - 120px); font-weight: bold;">Revenue</span>
+                    </div>
                     <div class="panel-body">
                         <a href="{{ url('/mgt/revenue/create') }}" class="btn btn-success btn-sm" title="Add New Revenue">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
@@ -41,17 +47,20 @@
                         <br/>
                         <br/>
                         <div class="table-responsive">
-                            <table class="table table-borderless">
+                            <table class="table table-borderless table-striped">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Team</th><th>Amount</th><th>Month</th><th>Actions</th>
+                                        <th>#</th><th>Team</th><th>Num of Mem</th><th>Num of CTV</th><th>Amount</th><th>Month</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($revenue as $item)
                                     <tr>
                                         <td>{{ $loop->iteration or $item->id }}</td>
-                                        <td>{{ $item->team()->first()->name }}</td><td>{{ number_format($item->amount, '0', ',', '.') }}</td><td>{{ $item->monthYear }}</td>
+                                        <td>{{ $item->team_name }}</td>
+                                        <td>{{ $item->number_of_member }}</td>
+                                        <td>{{ $item->number_of_ctv }}</td>
+                                        <td>{{ number_format($item->amount, '0', ',', '.') }}</td><td>{{ $item->monthYear }}</td>
                                         <td>
                                             <a href="{{ url('/mgt/revenue/' . $item->id) }}" title="View Revenue"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/mgt/revenue/' . $item->id . '/edit') }}" title="Edit Revenue"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

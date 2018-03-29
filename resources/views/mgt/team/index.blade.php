@@ -4,7 +4,13 @@
 
             <div>
                 <div class="panel panel-default">
-                    <div class="panel-heading">Team</div>
+                    <div class="panel-heading">
+                        <button type="button" id="sidebarCollapse" class="btn btn-sm btn-info">
+                            <i class="glyphicon glyphicon-align-left"></i>
+                            <span>Toggle Sidebar</span>
+                        </button>
+                        <span style="margin-left: calc(50% - 120px); font-weight: bold;">Team</span>
+                    </div>
                     <div class="panel-body">
                         <a href="{{ url('/mgt/team/create') }}" class="btn btn-success btn-sm" title="Add New Team">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
@@ -24,11 +30,12 @@
                         <br/>
                         <br/>
                         <div class="table-responsive">
-                            <table class="table table-borderless">
+                            <table class="table table-borderless table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th><th>Name</th>
                                         <th>Members</th>
+                                        <th>Active</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -38,6 +45,7 @@
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->users()->pluck('name') }}</td>
+                                        <td class="text-center"><input id="{{$item->id}}" class="chk_team_active" data-id={{ $item->id }} type="checkbox" @if($item->active) checked="checked" @endif></td>
                                         <td>
                                             <a href="{{ url('/mgt/team/' . $item->id) }}" title="View Team"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/mgt/team/'.$item->id.'/edit') }}" title="Edit Team"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
@@ -64,4 +72,16 @@
                     </div>
                 </div>
             </div>
+@endsection
+@section('javascript')
+<script>
+    $(".chk_team_active").on("change", function() {
+        $.get(
+                "/team/update-active",
+                {team_id: $(this).attr("id")},
+                function(data) {
+                }
+         );
+    });
+</script>
 @endsection

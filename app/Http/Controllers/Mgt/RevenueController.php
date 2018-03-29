@@ -58,7 +58,7 @@ class RevenueController extends Controller
      */
     public function create()
     {
-        $teams = Team::get()->pluck('name', 'id');
+        $teams = Team::where('active', true)->get()->pluck('name', 'id');
         $monthYear = $this->monthYear;
         return view('mgt.revenue.create', compact('teams', 'monthYear'));
     }
@@ -74,6 +74,18 @@ class RevenueController extends Controller
     {
         
         $requestData = $request->all();
+        $team_id = $request->get('team_id');
+        $requestData['team_name']= Team::findOrFail($team_id)->name;
+        $requestData['number_of_member'] = count(Team::where('id', $team_id)
+            ->users()
+            ->where('type', '<>', 8)
+            ->get()
+            ->toArray());
+        $requestData['number_of_ctv'] = count(Team::where('id', $team_id)
+            ->users()
+            ->where('type', 8)
+            ->get()
+            ->toArray());
         
         Revenue::create($requestData);
 
@@ -122,8 +134,14 @@ class RevenueController extends Controller
     {
         
         $requestData = $request->all();
-        
         $revenue = Revenue::findOrFail($id);
+        $team_id = $request->get('team_id');
+        if($revenue->team_id != $team_id){
+            $requestData['team_name']= Team::findOrFail($team_id)->name;
+            $requestData['number_of_member'] = count(Team::findOrFail($team_id)->users()
+            ->get()
+            ->toArray());
+        }
         $revenue->update($requestData);
 
         return redirect('mgt/revenue')->with('flash_message', 'Revenue updated!');

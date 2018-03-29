@@ -38,7 +38,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Salary');
     }
-
+    public function getTenVaBophanAttribute(){
+        return $this->name.'('.$this->bphan.')';
+    }
     public function getBphanAttribute()
     {
         if($this->type == 1) 

@@ -24,8 +24,11 @@ Route::get('/home', 'HomeController@index');
 
 Route::resource('mgt/team', 'Mgt\\TeamController');
 Route::resource('mgt/user', 'Mgt\\UserController');
-Route::get('mgt/imposition-rate', 'Mgt\\ImpositionRateController@index');
 Route::resource('mgt/revenue', 'Mgt\\RevenueController');
 Route::resource('mgt/salary', 'Mgt\\SalaryController');
 Route::post('mgt/salary-table', 'Mgt\\SalaryController@storeSalaries');
 Route::get('users/update-active', 'Mgt\\UserController@updateActive');
+Route::get('team/update-active', 'Mgt\\TeamController@updateActive');
+Route::get('mgt/imposition-rate', 'Mgt\\ImpositionRateController@index');
+Route::get('mgt/fundermantal-index', 'Mgt\\FundermantalIndexController@index');
+Route::post('mgt/fundermantal-index', 'Mgt\\FundermantalIndexController@show');

@@ -39,21 +39,21 @@ class ImpositionRateController extends Controller
     	if($request->get('monthYear')){
     		$revenues = \App\Revenue::where('monthYear', $request->get('monthYear'))->get()->toArray();
     	}*/
-    	$teams = \App\Team::all();
+    	$revenues = \App\Revenue::where('monthYear', $monthValue)->get();
         $utility = new Utility();
-    	return view('mgt.imposition-rate.index', compact('monthYear', 'teams', 'isRequest', 'monthValue', 'tongdoanhthu', 'utility'));
+    	return view('mgt.imposition-rate.index', compact('monthYear', 'revenues', 'isRequest', 'monthValue', 'tongdoanhthu', 'utility'));
     }
 
     public function calculateRevenue($month)
     {
-        $teamIds = Team::get()->pluck('id');
+/*        $teamIds = Team::get()->pluck('id');
         foreach ($teamIds as $teamId) {
             if(count(Revenue::where('monthYear', $month)
                         ->where('team_id', $teamId)
                         ->get()
                         ->toArray()) == 0)
                 Revenue::create(['team_id' => $teamId, 'monthYear' => $month, 'amount' => 0]);
-        }
+        }*/
         if(!$month)
             return 0;
         $revenues = Revenue::where('monthYear', $month)->get();

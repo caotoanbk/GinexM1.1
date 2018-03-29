@@ -3,7 +3,13 @@
 @section('content')
             <div>
                 <div class="panel panel-default">
-                    <div class="panel-heading">User</div>
+                    <div class="panel-heading">
+                        <button type="button" id="sidebarCollapse" class="btn btn-sm btn-info">
+                            <i class="glyphicon glyphicon-align-left"></i>
+                            <span>Toggle Sidebar</span>
+                        </button>
+                        <span style="margin-left: calc(50% - 120px); font-weight: bold;">User</span>
+                    </div>
                     <div class="panel-body">
                         <a href="{{ url('/mgt/user/create') }}" class="btn btn-success btn-sm" title="Add New User">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
@@ -23,7 +29,7 @@
                         <br/>
                         <br/>
                         <div class="table-responsive">
-                            <table class="table table-borderless">
+                            <table class="table table-borderless table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th><th>Name</th><th>Email</th><th>Job</th><th>Active</th><th>Actions</th>

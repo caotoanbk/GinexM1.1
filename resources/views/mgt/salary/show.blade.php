@@ -9,7 +9,7 @@
                             <i class="glyphicon glyphicon-align-left"></i>
                             <span>Toggle Sidebar</span>
                         </button>
-                        <span style="margin-left: calc(50% - 120px); font-weight: bold;">Salary of {{ $salary->user()->first()->name }}</span>
+                        <span style="margin-left: calc(50% - 120px); font-weight: bold;">Salary of {{ $salary->user_name }}</span>
                     </div>
                     <div class="panel-body">
 
@@ -33,7 +33,7 @@
                         <div class="table-responsive">
                             <table class="table table-borderless">
                                 <tbody>
-                                    <tr><th> User</th><td> {{ $salary->user()->first()->name }} </td></tr><tr><th> Amount </th><td> {{ number_format($salary->ammount, 0, ',', '.') }} </td></tr><tr><th> Month </th><td> {{ $salary->monthYear }} </td></tr>
+                                    <tr><th> User</th><td> {{ $salary->user_name }} </td></tr> <tr><th> Job</th><td> {{ $salary->bphan }} </td></tr><tr><th> Amount </th><td> {{ number_format($salary->ammount, 0, ',', '.') }} </td></tr><tr><th> Month </th><td> {{ $salary->monthYear }} </td></tr>
                                 </tbody>
                             </table>
                         </div>

@@ -30,18 +30,18 @@
                         <br/>
                         <br/>
                         <div class="table-responsive">
-                            <table class="table table-borderless">
+                            <table class="table table-borderless table-striped">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>User</th><th>Job</th><th>Amount</th><th>Month</th><th>Actions</th>
+                                        <th>#</th><th>User</th></th><th>Job</th><th>Amount</th><th>Month</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($salary as $item)
                                     <tr>
                                         <td>{{ $loop->iteration or $item->id }}</td>
-                                        <td>{{ $item->user()->first()->name }}</td>
-                                        <td>{{ $item->user()->first()->bphan }}</td>
+                                        <td>{{ $item->user_name }}</td>
+                                        <td>{{ $item->bphan }}</td>
                                         <td>{{ number_format($item->amount, 0, ',', '.') }}</td><td>{{ $item->monthYear }}</td>
                                         <td>
                                             <a href="{{ url('/mgt/salary/' . $item->id) }}" title="View Salary"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>

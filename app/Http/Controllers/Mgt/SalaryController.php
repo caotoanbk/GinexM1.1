@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Salary;
 use App\User;
+use App\Team;
 use Illuminate\Http\Request;
 
 class SalaryController extends Controller
@@ -79,14 +80,19 @@ class SalaryController extends Controller
     }
     public function storeSalaries(Request $request)
     {
-        $userIds = User::get()->pluck('id');
+        $userIds = User::where('active', true)->get()->pluck('id');
         foreach ($userIds as $userId) {
             if(Salary::where('user_id', $userId)
                 ->where('monthYear', $request->get('monthYear'))
                 ->get()
                 ->toArray())
-                return redirect('mgt/salary')->with('flash_message', 'Salary On this month already exist!');
-            Salary::create(['user_id' => $userId, 'monthYear' => $request->get('monthYear'), 'amount' => 0]);
+                return redirect('mgt/salary')->with('flash_message', 'Salary of this person on this month already exist!');
+            $team = User::find($userId)->team()->first();
+            $team_id = null;
+            if($team){
+                $team_id = $team->id;
+            }
+            Salary::create(['user_id' => $userId, 'monthYear' => $request->get('monthYear'), 'user_type' => User::find($userId)->type, 'amount' => 4000, 'user_name' => User::find($userId)->name, 'team_id' => $team_id]);
         }
         return redirect('mgt/salary')->with('flash_message', 'Salary Table created!');
     }
@@ -115,8 +121,9 @@ class SalaryController extends Controller
     public function edit($id)
     {
         $salary = Salary::findOrFail($id);
+        $teams = Team::get()->pluck('name', 'id');
 
-        return view('mgt.salary.edit', compact('salary'));
+        return view('mgt.salary.edit', compact('salary', 'teams'));
     }
 
     /**
